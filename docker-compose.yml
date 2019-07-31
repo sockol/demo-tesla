@@ -1,0 +1,56 @@
+version: '3.5'
+    
+# Useful commands 
+# https://github.ibm.com/GBS-Design/onboarding-dev/blob/master/docs/docker-compose.md
+
+services: 
+  
+    db:
+        container_name: orchard_db
+        hostname: db
+        image: postgres 
+        environment:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        ports:
+          - "5436:5432"
+        volumes:
+          - ./orchard-db:/var/lib/postgresql/data
+
+    adminer:
+        container_name: orchard_adminer
+        image: adminer 
+        ports:
+          - "7036:8080"
+        links: 
+          - db
+
+    ui:
+        container_name: orchard_ui
+        build: ./orchard-ui
+        hostname: ui
+         
+        links:
+          - api
+
+        volumes:
+          - ./orchard-ui:/orchard_ui  
+          - /orchard_ui/node_modules
+        ports:
+          - "7000:7000"
+
+    api:
+        container_name: orchard_api
+        build: ./orchard-api
+        hostname: api
+        depends_on:
+          - db
+         
+        volumes:
+          - ./orchard-api:/orchard_api
+          - /orchard_api/node_modules
+        links: 
+          - db 
+        ports:
+          - "7001:7001"
+          - "9229:9229"
