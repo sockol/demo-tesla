@@ -5,6 +5,13 @@ version: '3.5'
 
 services: 
   
+    pptx: 
+        container_name: orchard_pptx  
+        build: ./orchard-pptx
+        hostname: pptx
+        ports:
+          - "7002:3000"
+
     db:
         container_name: orchard_db
         hostname: db
@@ -51,6 +58,7 @@ services:
           - /orchard_api/node_modules
         links: 
           - db 
+          - pptx
         ports:
           - "7001:7001"
           - "9229:9229"
