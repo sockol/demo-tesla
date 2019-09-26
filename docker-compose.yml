@@ -32,19 +32,48 @@ services:
         links: 
           - db
 
-    ui:
-        container_name: orchard_ui
-        build: ./orchard-ui
-        hostname: ui
+    proxy:
+        container_name: orchard_proxy
+        build: ./orchard-proxy
+        hostname: proxy
+        restart: on-failure
+         
+        links:
+          - ui-foh
+          - ui-boh
+
+        volumes:
+          - ./orchard-proxy:/orchard_proxy 
+        ports:
+          - "7000:7000"
+ 
+    ui-foh:
+        container_name: orchard_ui_foh
+        build: ./orchard-ui-foh
+        hostname: ui-foh
          
         links:
           - api
 
         volumes:
-          - ./orchard-ui:/orchard_ui  
-          - /orchard_ui/node_modules
+          - ./orchard-ui-foh:/orchard_ui_foh  
+          - /orchard_ui_foh/node_modules
         ports:
-          - "7000:7000"
+          - "7004:7004"
+
+    ui-boh:
+        container_name: orchard_ui_boh
+        build: ./orchard-ui-boh
+        hostname: ui-boh
+         
+        links:
+          - api
+
+        volumes:
+          - ./orchard-ui-boh:/orchard_ui_boh
+          - /orchard_ui_boh/node_modules
+        ports:
+          - "7005:7005"
 
     api:
         container_name: orchard_api
