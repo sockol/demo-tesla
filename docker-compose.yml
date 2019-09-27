@@ -32,10 +32,10 @@ services:
         links: 
           - db
 
-    proxy:
-        container_name: orchard_proxy
-        build: ./orchard-proxy
-        hostname: proxy
+    ui:
+        container_name: orchard_ui
+        build: ./orchard-ui
+        hostname: ui
         restart: on-failure
          
         links:
@@ -43,7 +43,7 @@ services:
           - ui-boh
 
         volumes:
-          - ./orchard-proxy:/orchard_proxy 
+          - ./orchard-ui:/orchard_ui
         ports:
           - "7000:7000"
  
