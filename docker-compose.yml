@@ -5,89 +5,43 @@ version: '3.5'
 
 services: 
   
-    pptx: 
-        container_name: orchard_pptx  
-        build: ./orchard-pptx
-        hostname: pptx
-        ports:
-          - "7002:3000"
-
     db:
-        container_name: orchard_db
+        container_name: demo_db
         hostname: db
-        image: postgres 
+        image: redis
         environment:
           POSTGRES_USER: user
           POSTGRES_PASSWORD: password
         ports:
-          - "5436:5432"
+          - "6379:6379"
         volumes:
-          - ./orchard-db:/var/lib/postgresql/data
-
-    adminer:
-        container_name: orchard_adminer
-        image: adminer 
-        ports:
-          - "7036:8080"
-        links: 
-          - db
+          - ./demo-db:/var/lib/postgresql/data
 
     ui:
-        container_name: orchard_ui
-        build: ./orchard-ui
-        hostname: ui
-        restart: on-failure
-         
-        links:
-          - ui-foh
-          - ui-boh
-
-        volumes:
-          - ./orchard-ui:/orchard_ui
-        ports:
-          - "7000:7000"
- 
-    ui-foh:
-        container_name: orchard_ui_foh
-        build: ./orchard-ui-foh
+        container_name: demo_ui_foh
+        build: ./demo-ui-foh
         hostname: ui-foh
          
         links:
           - api
 
         volumes:
-          - ./orchard-ui-foh:/orchard_ui_foh  
-          - /orchard_ui_foh/node_modules
+          - ./demo-ui-foh:/demo_ui_foh  
+          - /demo_ui_foh/node_modules
         ports:
-          - "7004:7004"
-
-    ui-boh:
-        container_name: orchard_ui_boh
-        build: ./orchard-ui-boh
-        hostname: ui-boh
-         
-        links:
-          - api
-
-        volumes:
-          - ./orchard-ui-boh:/orchard_ui_boh
-          - /orchard_ui_boh/node_modules
-        ports:
-          - "7005:7005"
+          - "80:80"
 
     api:
-        container_name: orchard_api
-        build: ./orchard-api
+        container_name: demo_api
+        build: ./demo-api
         hostname: api
         depends_on:
           - db
          
         volumes:
-          - ./orchard-api:/orchard_api
-          - /orchard_api/node_modules
+          - ./demo-api:/demo_api
+          - /demo_api/node_modules
         links: 
           - db 
-          - pptx
         ports:
-          - "7001:7001"
-          - "9229:9229"
+          - "81:81"
