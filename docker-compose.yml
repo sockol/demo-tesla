@@ -1,47 +1,68 @@
 version: '3.5'
-    
-# Useful commands 
-# https://github.ibm.com/GBS-Design/onboarding-dev/blob/master/docs/docker-compose.md
 
 services: 
   
+    db-ui: 
+      container_name: redis-commander
+      hostname: redis-commander
+      image: rediscommander/redis-commander:latest
+      restart: always
+      environment:
+        - REDIS_HOSTS=local:db:6379
+      ports:
+        - "8081:8081"
+      links:
+        - db
+        
     db:
-        container_name: demo_db
+        container_name: db
         hostname: db
         image: redis
-        environment:
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
         ports:
           - "6379:6379"
         volumes:
-          - ./demo-db:/var/lib/postgresql/data
+          - ./db:/opt/redis
 
     ui:
-        container_name: demo_ui_foh
-        build: ./demo-ui-foh
-        hostname: ui-foh
+        container_name: ui
+        build: ./ui
+        hostname: ui
          
-        links:
-          - api
+        # links:
+        #   - api
 
         volumes:
-          - ./demo-ui-foh:/demo_ui_foh  
-          - /demo_ui_foh/node_modules
+          - ./ui:/ui  
+          - /ui/node_modules
         ports:
           - "80:80"
 
     api:
-        container_name: demo_api
-        build: ./demo-api
+        container_name: api
+        build: ./api
         hostname: api
         depends_on:
           - db
          
         volumes:
-          - ./demo-api:/demo_api
-          - /demo_api/node_modules
+          - ./api:/api
+          - /api/node_modules
         links: 
           - db 
         ports:
           - "81:81"
+
+    socket:
+        container_name: socket
+        build: ./socket
+        hostname: socket
+        depends_on:
+          - api
+         
+        volumes:
+          - ./socket:/socket
+          - /api/node_modules
+        links: 
+          - api 
+        ports:
+          - "82:82"
