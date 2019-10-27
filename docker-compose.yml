@@ -58,11 +58,13 @@ services:
         hostname: socket
         depends_on:
           - api
+          - db
          
         volumes:
           - ./socket:/socket
-          - /api/node_modules
+          - /socket/node_modules
         links: 
           - api 
+          - db
         ports:
           - "82:82"
