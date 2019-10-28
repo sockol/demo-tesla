@@ -27,9 +27,11 @@ services:
         container_name: ui
         build: ./ui
         hostname: ui
+        depends_on:
+          - api
          
-        # links:
-        #   - api
+        links:
+          - api
 
         volumes:
           - ./ui:/ui  
