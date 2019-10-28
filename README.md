@@ -1,29 +1,27 @@
 <p align="center">
-  <a href="https://orchard-navigator.w3bmix.ibm.com/">
-    <img alt="IBM GBS orchard [CMS]" src="https://orchard-navigator.w3bmix.ibm.com/static/favicon.png" width="60" />
-  </a>
+  <img alt="Tesla Demo" src="https://www.tesla.com/themes/custom/tesla_frontend/assets/favicons/favicon.ico" width="60" /> 
 </p>
 <h1 align="center">
-  IBM GBS orchard
+  Tesla Demo
 </h1>
 
 
 ## Links 
 
-[Client](localhost:7000)
-[API](localhost:7001/graphql)
-[DB GUI](localhost:7036)
-[DB Postgress](postgresql://user:password@localhost:5436/orchard)
+[UI](localhost:80)
+
+[API](localhost:81)
+
+[Socket Service](localhost:81)
+
+[DB GUI](http://localhost:8081/)
 
 ## 🚀 Quick start
 
 1.  **Clone repos.**
 
     ```sh 
-    git clone https://github.ibm.com/GBS-Offerings/orchard
-    cd ./orchard
-    git clone https://github.ibm.com/GBS-Offerings/orchard-api
-    git clone https://github.ibm.com/GBS-Offerings/orchard-client
+    git clone https://github.com/sockol/demo-tesla
     ```
 
 2.  **Install dependencies.**
@@ -33,8 +31,11 @@
 3.  **Install containers.**
 
     ```sh 
-    docker-compose build && docker-compose up -d
+    docker-compose build && docker-compose up
     ```
+4.  **Install containers.**
+
+    Wait for a success message for localhost:80 to show up, then navigate to [here](localhost:80)
 
 
 ## 🧐 What's inside?
@@ -42,18 +43,13 @@
 A quick look at the top-level files and directories you'll see in a Gatsby project.
 
     .
-    ├── orchard-api
-    ├── orchard-client
-    ├── orchard-db
+    ├── api
+    ├── client
+    ├── db
     ├── docker-compose.yml 
     └── README.md
 
-  1.  **`/orchard-api`**: Graphql api for front end. Uses CMS as backend.
-  2.  **`/orchard-client`**: Frontend site. Uses API as backend.
-  3.  **`/orchard-db`**: Pg runs here 
+  1.  **`/api`**: Graphql api for front end. Uses CMS as backend.
+  2.  **`/client`**: Frontend site. Uses API as backend.
+  3.  **`/db`**: Pg runs here 
   4.  **`/docker-compose.yml`**: Container configs
-
-
-## 💫 Database
-
-Uses Postgres, refer to [this](https://github.ibm.com/GBS-Design/onboarding-dev/blob/master/docs/databases.md#postgres) for a good GUI for it
