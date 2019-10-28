@@ -1,0 +1,11 @@
+.DS_Store
+yarn.lock
+package-lock.json
+.next
+.env
+node_modules 
+demos
+.passwords
+.accounts
+data 
+tests/templates-content*
