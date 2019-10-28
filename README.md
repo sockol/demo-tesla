@@ -35,7 +35,7 @@ Car attributes are broadcast over a websocket connection, so changes from userA 
     ```
 4.  **Install containers.**
 
-    Wait for a success message for localhost:80 to show up, then navigate to [here](localhost:80)
+    Wait for a success message for localhost:80 to show up, then navigate to [here](http://localhost:80)
 
 
 ## 🧐 What's inside?
