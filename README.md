@@ -63,6 +63,7 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 ## Architecture 
 
+```
             Redis
               |
          ------------
@@ -70,6 +71,7 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 UI --- API <......> Socket Service
 |                    |
  --------------------
+```
 
 1. UI is the entry point that renders the CRUD forms and the WebGL Canvas
 2. UI makes CRUD requests to API, which updates Redis
