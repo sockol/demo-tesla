@@ -11,9 +11,9 @@ Car attributes are broadcast over a websocket connection, so changes from userA 
 
 ## Links 
 
-  1. [UI](localhost:80)
-  2. [API](localhost:81)
-  3. [Socket Service](localhost:81)
+  1. [UI](http://localhost:80)
+  2. [API](http://localhost:81)
+  3. [Socket Service](http://localhost:81)
   4. [DB GUI](http://localhost:8081/)
 
 ## 🚀 Quick start
