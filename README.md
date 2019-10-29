@@ -5,7 +5,7 @@
   Tesla Demo
 </h1>
 
-So this was an interesting experiment. Y
+So this was an interesting experiment.
 This app will load a WebGL canvas with Mars in it, place Tesla images around it.
 Car colors will update every .5s, color titles and locations can be updated by the user.
 Car attributes are broadcast over a load balanced set of websocket services, so changes from userA will propagate to userB. Web sockets are synchronized over Redis, so separate Socket nodes stay in sync. 
