@@ -1,6 +1,8 @@
 import React from 'react';
 import fetch from 'isomorphic-unfetch'
 
+
+
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography'; 
 
@@ -40,6 +42,8 @@ const extendedFetch = (url, params) => new Promise((resolve, reject) => {
 
 import io from 'socket.io-client'
 
+const MARKER_LIMIT = 10
+
 class Page extends React.Component {
 
   state = {
@@ -63,7 +67,12 @@ class Page extends React.Component {
       this.forceUpdate()
     })
 
-    
+    import('simple-web-notification')
+    .then(r => {
+      this.webNotification = r.default
+    })
+
+
     // #region socket
     this.Socket = io.connect(process.env.SOCKET_URI)
 
@@ -81,6 +90,16 @@ class Page extends React.Component {
       DBUG && console.log('ADD')
       tesla = JSON.parse(tesla)
       this.CanvasInstance.addMarker(tesla)
+
+      if(this.CanvasInstance.getMarkers().length > MARKER_LIMIT) 
+        this.webNotification.showNotification('Example Notification', {
+          body: `You added too many markers. Keep it closer to ${MARKER_LIMIT}`,
+          autoClose: 4000
+        }, (error, hide) => {
+          if (error)
+              return console.log(`Unable to show notification: ${error.message}`);        
+          setTimeout(hide, 5000); 
+        });
     })
     this.Socket.on('UPDATE', tesla => {
       DBUG && console.log('UPDATE')
@@ -100,7 +119,7 @@ class Page extends React.Component {
   handleTeslaClick = teslaId => this.setState({ teslaId })
   
 
-  // # region crud
+  // #region crud
   handleRemove = () => {
     this.setState({ 
       error: null, 
@@ -152,7 +171,7 @@ class Page extends React.Component {
   }
   // #endregion
 
-  // # region modals
+  // #region modals
   handleOpenUpdateModal = () => {
     this.setState({ isOpenModalUpdate: true })
     this.CanvasInstance.disableCamera()

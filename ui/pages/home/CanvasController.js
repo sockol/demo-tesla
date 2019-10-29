@@ -116,6 +116,8 @@ export default class {
 
     disableCamera = () => this.controls.enabled = false 
  
+    getMarkers = () => this.markers 
+
     addMarkers = (list = []) => {
         
         const objects = []
@@ -212,7 +214,7 @@ export default class {
     getMars = () => {
         const geometry = new THREE.SphereGeometry(1, 32, 32)
         const material = new THREE.MeshPhongMaterial({
-            map : THREE.ImageUtils.loadTexture(`static/${process.env.NODE_ENV === 'development' ? 'marsmap1k.jpg' : 'marsmap1k-hd.jpg'}`),
+            map : THREE.ImageUtils.loadTexture(`static/marsmap1k-hd.jpg`),
             bumpMap : THREE.ImageUtils.loadTexture(`static/marsbump1k.jpg`),
             bumpScale: 0.05,
         })

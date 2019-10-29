@@ -26,7 +26,7 @@ class TeslaTracker {
         this.fakeColorChange = this.fakeColorChange.bind(this)
         this.initConnection = this.initConnection.bind(this)
 
-        
+        this.id = Math.random()
         extendedFetch(`${process.env.API_URI_INTERNAL}/api/teslas`)
             .then(data => this.list.push(...data))
     }
@@ -38,7 +38,7 @@ class TeslaTracker {
                 this.list[i].color =getRandomColor() 
                 
             socket.broadcast.emit('COLOR_CHANGE', this.list)
-        }, 2 * 1000)
+        }, 500)
     }
 
     handleCRUD(socket){

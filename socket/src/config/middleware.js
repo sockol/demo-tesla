@@ -14,7 +14,7 @@ const cors = require(`cors`);
 const corsConfig = {
   origin: (origin, callback) => {
     const whitelist = (process.env.CORS_WHITELIST || ``).split(`,`).map(i => i.trim());
-
+    
     // NOTE: fix later
     // no origin when making backend call. kind of makes this redundant
     if (!origin)
@@ -87,10 +87,8 @@ module.exports.initMiddleware = app => {
   return app;
 };
 
-module.exports.initRoutes = app => {
-  const routeList = glob.sync(resolve(`./src/routes/**.js`)).map(i => require(resolve(i)));
-  routeList.forEach(route => route(app));
-
+module.exports.initRoutes = app => { 
+  app.get('/health', (req, res) => res.send('ok'))
   return app;
 };
 
